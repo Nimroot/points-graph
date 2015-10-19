@@ -42,7 +42,6 @@ class Grid(QFrame):
         self.GPointList.append(self.GPoint(6, -8))
         self.GPointList.append(self.GPoint(0, 7))
 
-
     def wheelEvent(self, event):
         if event.angleDelta().y() > 0 and self.grid_scale < 50:
             self.grid_scale += 1
@@ -53,7 +52,7 @@ class Grid(QFrame):
 
     def plotPoint(self, x, y):
         x = self.axis_midpoint + self.grid_scale * x
-        y = self.axis_midpoint + self.grid_scale * y
+        y = self.axis_midpoint - self.grid_scale * y
 
         painter = QPainter()
         painter.begin(self)
