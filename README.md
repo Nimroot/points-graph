@@ -13,6 +13,8 @@ Requirements:
 
 TODO:
 * plot points via GUI
-* move around the graph by holding down the middle mouse button and moving the mouse
+* Add a visual tick marks which indicate value on the axis
+* Implement new way of handling zooming (the old one leads to ugly results)
+* ~~move around the graph by holding down the middle mouse button and moving the mouse~~
 * plot linear and polynomial functions using straight lines and bezier curves
 * tooltips for points plots and function graphs
