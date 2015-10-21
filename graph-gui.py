@@ -69,7 +69,8 @@ class Grid(QFrame):
     def mouseMoveEvent(self, event):
         position_diff = event.screenPos() - self.cursor_lastpos
 
-        if event.buttons() & Qt.MidButton:
+        if (event.buttons() & Qt.MidButton) or\
+                (event.buttons() & Qt.RightButton):
             self.translate_val += position_diff
             self.cursor_lastpos = event.screenPos()
             self.axis_midpoint += position_diff
@@ -102,8 +103,6 @@ class Grid(QFrame):
         s_point = QPoint(t.x(), t.y())
         e_point = QPoint(self.grid_size + t.x(),
                          self.grid_size + t.y())
-
-        print(t.x() // 40)
 
         while s_point.x() <= e_point.x():
             painter.drawLine(s_point.x(), t.y(), s_point.x(),
