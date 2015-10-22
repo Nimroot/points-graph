@@ -2,7 +2,7 @@
 
 Just a simple proof of concept point grapher written in Python and PyQt in ~2 hours. I'll keep developing it if time permits.
 
-So far you are able to move the graph around with MMB/RMB and plot the points on the graph with LMB. You can also add your own point to plot by simply adding it to the array using following pattern (found in `Grid` class):
+So far you are able to move the graph around with MMB and plot the points on the graph with LMB. Now you are also able to remove them with RMB. You can also add your own point to plot by simply adding it to the array using following pattern (found in `Grid` class):
 
 ```python
 self.PointsList.append(QPoint(x, y))

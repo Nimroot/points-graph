@@ -66,20 +66,22 @@ class Grid(QFrame):
             x = round(event.windowPos().x() / 40 - self.axis_midpoint.x() / 40)
             y = round(event.windowPos().y() / 40 - self.axis_midpoint.y() / 40)
 
-            point_exists = False
-            for point in self.PointsList:
-                if point.x() == x and point.y() == y:
-                    point_exists = True
-
-            if point_exists is False:
+            if QPoint(x, y) not in self.PointsList:
                 self.PointsList.append(QPoint(x, y))
+                self.update()
+
+        if event.buttons() & Qt.RightButton:
+            x = round(event.windowPos().x() / 40 - self.axis_midpoint.x() / 40)
+            y = round(event.windowPos().y() / 40 - self.axis_midpoint.y() / 40)
+
+            if QPoint(x, y) in self.PointsList:
+                self.PointsList.remove(QPoint(x, y))
                 self.update()
 
     def mouseMoveEvent(self, event):
         position_diff = event.screenPos() - self.cursor_lastpos
 
-        if (event.buttons() & Qt.MidButton) or\
-                (event.buttons() & Qt.RightButton):
+        if (event.buttons() & Qt.MidButton):
             self.translate_val += position_diff
             self.cursor_lastpos = event.screenPos()
             self.axis_midpoint += position_diff
