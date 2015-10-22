@@ -58,13 +58,22 @@ class Grid(QFrame):
         self.cursor_lastpos = 0.0
 
         self.PointsList = []
-        self.PointsList.append(QPoint(-9, 1))
-        self.PointsList.append(QPoint(-4, -4))
-        self.PointsList.append(QPoint(6, -8))
-        self.PointsList.append(QPoint(0, 7))
 
     def mousePressEvent(self, event):
         self.cursor_lastpos = event.screenPos()
+
+        if event.buttons() & Qt.LeftButton:
+            x = round(event.windowPos().x() / 40 - self.axis_midpoint.x() / 40)
+            y = round(event.windowPos().y() / 40 - self.axis_midpoint.y() / 40)
+
+            point_exists = False
+            for point in self.PointsList:
+                if point.x() == x and point.y() == y:
+                    point_exists = True
+
+            if point_exists is False:
+                self.PointsList.append(QPoint(x, y))
+                self.update()
 
     def mouseMoveEvent(self, event):
         position_diff = event.screenPos() - self.cursor_lastpos
@@ -137,24 +146,14 @@ class Grid(QFrame):
                              self.axis_midpoint.x(),
                              self.grid_size)
 
-        for point in self.PointsList:
-            self.plotPoint(point.x(), point.y())
-
-        painter.end()
-
-    def plotPoint(self, x, y):
-        x = self.axis_midpoint.x() + self.grid_scale * x
-        y = self.axis_midpoint.y() - self.grid_scale * y
-
-        painter = QPainter()
-        painter.begin(self)
-        painter.setRenderHints(QPainter.Antialiasing, True)
-
         point_color = QColor(0, 0, 0)
         point_color.setNamedColor('#7c2136')
         painter.setPen(point_color)
         painter.setBrush(point_color)
-        painter.drawEllipse(QPoint(x, y), 5, 5)
+        for point in self.PointsList:
+            x = self.axis_midpoint.x() + self.grid_scale * point.x()
+            y = self.axis_midpoint.y() + self.grid_scale * point.y()
+            painter.drawEllipse(QPoint(x, y), 5, 5)
 
         painter.end()
 
